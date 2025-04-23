@@ -41,6 +41,13 @@ right={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_2="playerHurt"
+2d_physics/layer_5="walls"
+2d_physics/layer_9="enemy"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
