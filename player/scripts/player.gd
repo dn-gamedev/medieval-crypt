@@ -4,15 +4,17 @@ class_name Player extends CharacterBody2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var state_machine: PlayerStateMachine = $StateMachine
 
+
 @export var ground_accel := 1000.0
 @export var air_accel := 400.0
 @export var move_speed := 200.0
 @export var friction := 800.0
-@export var jump_height := 60.0
+@export var jump_height := 40.0
 @export var jump_time_to_peak := 0.3
 @export var jump_time_to_descent := 0.225
 @export var jump_buffer_time := 0.15 #tempo em segundos
 @export var coyote_time = 0.1
+
 
 var last_direction := 1.0 #1 para direita, -1 para a esquerda
 var jump_velocity: float
@@ -20,6 +22,9 @@ var jump_gravity: float
 var fall_gravity: float
 var jump_buffer_counter := 0.0
 var coyote_time_counter := 0.0
+var wall_jump_push := 100.0
+var wall_jump_force := -300.0
+var touching_wall := false
 
 func _ready() -> void:
   state_machine.initialize(self)
@@ -33,6 +38,7 @@ func _physics_process(_delta: float) -> void:
   var target_speed = input * move_speed
   var accel = ground_accel if is_on_floor()  else air_accel
   velocity.y += get_gravity_value() * _delta
+  touching_wall = is_on_wall_only()
 
   if input == 0:
     velocity.x = move_toward(velocity.x, 0, friction * _delta)
@@ -65,9 +71,12 @@ func _physics_process(_delta: float) -> void:
     jump_buffer_counter -= _delta
 
   # Pulo com buffer e coyote time
-  if jump_buffer_counter > 0 and coyote_time_counter > 0.0:
-    jump()
-    jump_buffer_counter = 0.0
+  if Input.is_action_just_pressed("up"):
+    if jump_buffer_counter > 0 and coyote_time_counter > 0.0:
+      jump()
+      jump_buffer_counter = 0.0
+    else:
+      wall_jump()
 
   move_and_slide()
   pass
@@ -79,6 +88,10 @@ func get_gravity_value():
 func jump() -> void:
   velocity.y = jump_velocity
   pass
+
+func wall_jump():
+  velocity.y = wall_jump_force
+  velocity.x = wall_jump_push * -sprite.scale.x  # Pula na direção oposta da parede
 
 func get_input_velocity() -> float:
   var horizontal: float = 0.0
