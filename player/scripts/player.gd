@@ -5,6 +5,7 @@ class_name Player extends CharacterBody2D
 @export var ground_accel := 1000.0
 @export var air_accel := 400.0
 @export var move_speed := 200.0
+@export var friction := 800.0
 @export var jump_height := 60.0
 @export var jump_time_to_peak := 0.3
 @export var jump_time_to_descent := 0.225
@@ -29,7 +30,14 @@ func _physics_process(_delta: float) -> void:
   var target_speed = input * move_speed
   var accel = ground_accel if is_on_floor()  else air_accel
   velocity.y += get_gravity_value() * _delta
-  velocity.x = move_toward(velocity.x, target_speed, accel * _delta)
+
+  if input == 0:
+    velocity.x = move_toward(velocity.x, 0, friction * _delta)
+  else:
+    velocity.x = move_toward(velocity.x, target_speed, accel * _delta)
+
+  if input == 0 and is_on_floor():
+    velocity.x = 0
 
   if input != 0:
     last_direction = input

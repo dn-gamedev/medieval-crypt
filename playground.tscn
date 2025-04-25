@@ -17,5 +17,4 @@ tile_map_data = PackedByteArray("AAD+/wAABQAGAAEAAAD//wAABQAGAAEAAAAAAAAABQAIAAE
 [node name="Player" parent="." instance=ExtResource("1_rupst")]
 position = Vector2(80, 126)
 script = ExtResource("2_is3ju")
-ground_accel = 800.0
 move_speed = 250.0
