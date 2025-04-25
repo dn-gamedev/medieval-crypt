@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cqt5gru2uur5q"]
+[gd_scene load_steps=11 format=3 uid="uid://cqt5gru2uur5q"]
 
 [ext_resource type="Texture2D" uid="uid://c1cud0piid0g4" path="res://player/sprites/knight.png" id="1_rkbax"]
+[ext_resource type="Script" uid="uid://byna0kn7m3d8f" path="res://player/player_state_machine.gd" id="2_g1dw6"]
 [ext_resource type="Script" uid="uid://bd5d47qvs4mct" path="res://player/scripts/player_camera.gd" id="2_rkbax"]
+[ext_resource type="Script" uid="uid://bubs6jumtbnjd" path="res://player/scripts/states/state_idle.gd" id="3_yw30f"]
+[ext_resource type="Script" uid="uid://ceh6n2mix2564" path="res://player/scripts/states/state_run.gd" id="4_qjkh3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rkbax"]
 size = Vector2(9, 7)
@@ -83,6 +86,15 @@ libraries = {
 &"": SubResource("AnimationLibrary_g1dw6")
 }
 autoplay = "idle"
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_g1dw6")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_yw30f")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("4_qjkh3")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 editor_draw_limits = true

@@ -1,6 +1,8 @@
 class_name Player extends CharacterBody2D
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var state_machine: PlayerStateMachine = $StateMachine
 
 @export var ground_accel := 1000.0
 @export var air_accel := 400.0
@@ -20,6 +22,7 @@ var jump_buffer_counter := 0.0
 var coyote_time_counter := 0.0
 
 func _ready() -> void:
+  state_machine.initialize(self)
   jump_velocity = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
   jump_gravity = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
   fall_gravity = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent)) * -1.0
@@ -86,3 +89,7 @@ func get_input_velocity() -> float:
     horizontal += 1.0
 
   return horizontal
+
+func update_animation(state: String) -> void:
+  animation_player.play(state)
+  pass
