@@ -6,7 +6,6 @@ func _ready() -> void:
   pass
 
 func update_limits(bounds: Array[Vector2]) -> void:
-  print_debug(bounds)
   if bounds == []:
     return
 

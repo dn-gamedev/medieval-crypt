@@ -23,8 +23,6 @@ func initialize(player: Player) -> void:
     if child is State:
       states.append(child)
 
-  print(states)
-
   if states.size() == 0:
     return
 
