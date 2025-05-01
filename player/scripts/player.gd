@@ -12,19 +12,21 @@ class_name Player extends CharacterBody2D
 @export var jump_height := 40.0
 @export var jump_time_to_peak := 0.3
 @export var jump_time_to_descent := 0.2
-@export var jump_buffer_time := 0.15 #tempo em segundos
+@export var jump_buffer_time := 0.15 # tempo em segundos
 @export var coyote_time = 0.1
 
 
-var last_direction := 1.0 #1 para direita, -1 para a esquerda
+var last_direction := 1.0 # 1 para direita, -1 para a esquerda
 var jump_velocity: float
 var jump_gravity: float
 var fall_gravity: float
 var jump_buffer_counter := 0.0
 var coyote_time_counter := 0.0
 var wall_jump_push := 100.0
-var wall_jump_force := -300.0
+var wall_jump_force := -200.0
 var touching_wall := false
+var wall_slide_speed := 50.0
+var wall_jump_count := 1
 
 func _ready() -> void:
   state_machine.initialize(self)
@@ -32,11 +34,10 @@ func _ready() -> void:
   jump_gravity = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
   fall_gravity = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent)) * -1.0
 
-
 func _physics_process(_delta: float) -> void:
   var input = get_input_velocity()
   var target_speed = input * move_speed
-  var accel = ground_accel if is_on_floor()  else air_accel
+  var accel = ground_accel if is_on_floor() else air_accel
   velocity.y += get_gravity_value() * _delta
   touching_wall = is_on_wall_only()
 
@@ -60,6 +61,7 @@ func _physics_process(_delta: float) -> void:
   #atualiza contator do coyote time
   if is_on_floor():
     coyote_time_counter = coyote_time
+    wall_jump_count = 0
   else:
     coyote_time_counter -= _delta
 
@@ -70,14 +72,16 @@ func _physics_process(_delta: float) -> void:
   if jump_buffer_counter > 0:
     jump_buffer_counter -= _delta
 
+  if touching_wall && velocity.y > wall_slide_speed:
+    velocity.y = wall_slide_speed
+    animation_player.play("RESET")
+
   # Pulo com buffer e coyote time
   if Input.is_action_just_pressed("jump"):
     if jump_buffer_counter > 0 and coyote_time_counter > 0.0:
-      print("jump")
       jump()
       jump_buffer_counter = 0.0
-    elif touching_wall:
-      print("wall-jump")
+    elif touching_wall && wall_jump_count < 1:
       wall_jump()
 
   move_and_slide()
@@ -93,6 +97,7 @@ func jump() -> void:
 
 func wall_jump():
   velocity.y = wall_jump_force
+  wall_jump_count += 1
   #velocity.x = wall_jump_push * -sprite.scale.x  # Pula na direção oposta da parede
 
 func get_input_velocity() -> float:

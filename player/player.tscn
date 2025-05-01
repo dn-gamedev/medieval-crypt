@@ -71,7 +71,6 @@ _data = {
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 16
 script = ExtResource("1_g6k8r")
-jump_time_to_descent = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -12)
