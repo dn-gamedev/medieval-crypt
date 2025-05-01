@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://cqt5gru2uur5q"]
+[gd_scene load_steps=12 format=3 uid="uid://cqt5gru2uur5q"]
 
+[ext_resource type="Script" uid="uid://dokkyamhto6w7" path="res://player/scripts/player.gd" id="1_g6k8r"]
 [ext_resource type="Texture2D" uid="uid://c1cud0piid0g4" path="res://player/sprites/knight.png" id="1_rkbax"]
 [ext_resource type="Script" uid="uid://byna0kn7m3d8f" path="res://player/player_state_machine.gd" id="2_g1dw6"]
 [ext_resource type="Script" uid="uid://bd5d47qvs4mct" path="res://player/scripts/player_camera.gd" id="2_rkbax"]
@@ -69,6 +70,8 @@ _data = {
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 16
+script = ExtResource("1_g6k8r")
+jump_time_to_descent = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -12)

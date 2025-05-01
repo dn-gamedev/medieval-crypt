@@ -11,7 +11,7 @@ class_name Player extends CharacterBody2D
 @export var friction := 800.0
 @export var jump_height := 40.0
 @export var jump_time_to_peak := 0.3
-@export var jump_time_to_descent := 0.225
+@export var jump_time_to_descent := 0.2
 @export var jump_buffer_time := 0.15 #tempo em segundos
 @export var coyote_time = 0.1
 
@@ -54,7 +54,7 @@ func _physics_process(_delta: float) -> void:
   sprite.scale.x = -1 if last_direction < 0 else 1
 
   # Pulo variável
-  if velocity.y < 0 and not Input.is_action_pressed("up"):
+  if velocity.y < 0 and not Input.is_action_pressed("jump"):
     velocity.y += jump_gravity * 2 * _delta
 
   #atualiza contator do coyote time
@@ -64,18 +64,20 @@ func _physics_process(_delta: float) -> void:
     coyote_time_counter -= _delta
 
   #atualiza o buffer do pulo
-  if Input.is_action_just_pressed("up"):
+  if Input.is_action_just_pressed("jump"):
     jump_buffer_counter = jump_buffer_time
 
   if jump_buffer_counter > 0:
     jump_buffer_counter -= _delta
 
   # Pulo com buffer e coyote time
-  if Input.is_action_just_pressed("up"):
+  if Input.is_action_just_pressed("jump"):
     if jump_buffer_counter > 0 and coyote_time_counter > 0.0:
+      print("jump")
       jump()
       jump_buffer_counter = 0.0
-    else:
+    elif touching_wall:
+      print("wall-jump")
       wall_jump()
 
   move_and_slide()
@@ -91,7 +93,7 @@ func jump() -> void:
 
 func wall_jump():
   velocity.y = wall_jump_force
-  velocity.x = wall_jump_push * -sprite.scale.x  # Pula na direção oposta da parede
+  #velocity.x = wall_jump_push * -sprite.scale.x  # Pula na direção oposta da parede
 
 func get_input_velocity() -> float:
   var horizontal: float = 0.0

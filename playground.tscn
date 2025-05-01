@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=4 uid="uid://cdh0xb25c4b5f"]
+[gd_scene load_steps=4 format=4 uid="uid://cdh0xb25c4b5f"]
 
 [ext_resource type="PackedScene" uid="uid://cqt5gru2uur5q" path="res://player/player.tscn" id="1_rupst"]
-[ext_resource type="Script" uid="uid://dokkyamhto6w7" path="res://player/scripts/player.gd" id="2_is3ju"]
 [ext_resource type="PackedScene" uid="uid://ddqk0abc0hany" path="res://tilemaps/platforms.tscn" id="2_wt17y"]
 [ext_resource type="PackedScene" uid="uid://bikwoetubtgob" path="res://tilemaps/scene-bg.tscn" id="4_is3ju"]
 
@@ -16,5 +15,4 @@ tile_map_data = PackedByteArray("AAD+/wAABQAGAAEAAAD//wAABQAGAAEAAAAAAAAABQAIAAE
 
 [node name="Player" parent="." instance=ExtResource("1_rupst")]
 position = Vector2(80, 126)
-script = ExtResource("2_is3ju")
-move_speed = 250.0
+jump_time_to_descent = 0.02
