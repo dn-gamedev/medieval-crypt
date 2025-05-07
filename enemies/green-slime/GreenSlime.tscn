@@ -1,93 +1,121 @@
-[gd_scene load_steps=13 format=3 uid="uid://b6a0pq1bl105a"]
+[gd_scene load_steps=10 format=3 uid="uid://b6a0pq1bl105a"]
 
 [ext_resource type="Texture2D" uid="uid://bj5kxxbhxc8fn" path="res://enemies/green-slime/sprites/slime_green.png" id="1_3j1cx"]
 [ext_resource type="Script" uid="uid://d2x3dj17xjnp7" path="res://enemies/scripts/enemy.gd" id="1_ux8fh"]
+[ext_resource type="PackedScene" uid="uid://c6s06a26ntvy" path="res://GeneralNodes/HurtBox/hurtbox.tscn" id="3_y36yv"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ux8fh"]
-atlas = ExtResource("1_3j1cx")
-region = Rect2(0, 0, 24, 24)
+[sub_resource type="Animation" id="Animation_y36yv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -12)]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y36yv"]
-atlas = ExtResource("1_3j1cx")
-region = Rect2(24, 0, 24, 24)
+[sub_resource type="Animation" id="Animation_ux8fh"]
+resource_name = "idle"
+length = 0.35
+loop_mode = 2
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0381275, 0.0763428, 0.123035, 0.171248, 0.226303, 0.270715),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_getkp"]
-atlas = ExtResource("1_3j1cx")
-region = Rect2(48, 0, 24, 24)
+[sub_resource type="Animation" id="Animation_getkp"]
+resource_name = "jump"
+length = 0.35
+loop_mode = 2
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0381275, 0.0763428, 0.123035, 0.171248, 0.226303, 0.270715),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25469),
+"transitions": PackedFloat32Array(3.86374, 3.86374),
+"update": 0,
+"values": [Vector2(0, -12), Vector2(0, -17.37)]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q4oky"]
-atlas = ExtResource("1_3j1cx")
-region = Rect2(72, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_c2i4l"]
-atlas = ExtResource("1_3j1cx")
-region = Rect2(0, 24, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_51c4s"]
-atlas = ExtResource("1_3j1cx")
-region = Rect2(24, 24, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v207d"]
-atlas = ExtResource("1_3j1cx")
-region = Rect2(48, 24, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y3fdd"]
-atlas = ExtResource("1_3j1cx")
-region = Rect2(72, 24, 24, 24)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_cebtb"]
-animations = [{
-"frames": [],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ux8fh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_y36yv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_getkp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_q4oky")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_c2i4l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_51c4s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_v207d")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_y3fdd")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 9.0
-}]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_getkp"]
+_data = {
+&"RESET": SubResource("Animation_y36yv"),
+&"idle": SubResource("Animation_ux8fh"),
+&"jump": SubResource("Animation_getkp")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_33aht"]
 size = Vector2(12, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_getkp"]
+size = Vector2(14, 13)
 
 [node name="GreenSlime" type="CharacterBody2D"]
 collision_layer = 256
 script = ExtResource("1_ux8fh")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -12)
-sprite_frames = SubResource("SpriteFrames_cebtb")
-animation = &"idle"
+texture = ExtResource("1_3j1cx")
+hframes = 4
+vframes = 3
+frame = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_getkp")
+}
 autoplay = "idle"
-frame = 4
-frame_progress = 0.343175
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5.5)
 shape = SubResource("RectangleShape2D_33aht")
-debug_color = Color(0.845738, 0.000994574, 0.910005, 0.42)
+
+[node name="HurtBox" parent="." instance=ExtResource("3_y36yv")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_getkp")
+debug_color = Color(0.984314, 0, 0, 0.419608)
